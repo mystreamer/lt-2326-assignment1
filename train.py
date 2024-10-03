@@ -43,6 +43,7 @@ tf.device = torch.device(detect_platform(tf.cuda_num))
 DEVICE = tf.device
 DTYPE = tf.dtype
 BATCH_SIZE = args.batch_size if args.batch_size else tf.batch_size
+tf.epochs = args.epochs if args.epochs else tf.epochs
 
 train_loader = torch.utils.data.DataLoader(ThaiOCRDataset(train_data, onehotencoder=ohe), batch_size=BATCH_SIZE)
 test_loader = torch.utils.data.DataLoader(ThaiOCRDataset(test_data, onehotencoder=ohe), batch_size=BATCH_SIZE)

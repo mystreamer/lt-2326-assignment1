@@ -39,8 +39,6 @@ with open(f'{ MODEL_DIR_PATH }thaiocr.ohe', "rb") as f:
     charcode_char_map = data["charmap"]
 LABEL_NUMBER = ohe.categories_[0].shape[0]
 
-
-
 inference_df = pd.read_csv("./inference_data.csv")
 inference_df = inference_df[inference_df['type'] == 'test'].rename(columns={"char_code": "label", "fpath": "image_path"})[['image_path', 'label']]
 test_loader = torch.utils.data.DataLoader(ThaiOCRDataset(inference_df, ohe), batch_size=BATCH_SIZE)
