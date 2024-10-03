@@ -11,6 +11,7 @@ from torcheval.metrics import MulticlassF1Score, MulticlassPrecision, Multiclass
 from sklearn.metrics import classification_report
 import numpy as np
 import sys
+import argparse
 
 # Append system path
 sys.path.append('../')
@@ -20,8 +21,12 @@ from modules.ThaiOCRNN import ThaiOCRNN
 from modules.TrainingConfig import TrainingConfig
 from modules.utils import detect_platform
 
+parser = argparse.ArgumentParser(description='Train the ThaiOCR model.')
+parser.add_argument('--batch_size', type=int, default=None, help='Batch size for training.')
+args = parser.parse_args()
+
 CUDA_NUM = TrainingConfig.cuda_num
-BATCH_SIZE = TrainingConfig.batch_size
+BATCH_SIZE = args.batch_size if args.batch_size else  TrainingConfig.batch_size
 tf = TrainingConfig
 tf.device = torch.device(detect_platform(CUDA_NUM))
 DEVICE = tf.device
@@ -41,7 +46,7 @@ inference_df = inference_df[inference_df['type'] == 'test'].rename(columns={"cha
 test_loader = torch.utils.data.DataLoader(ThaiOCRDataset(inference_df, ohe), batch_size=BATCH_SIZE)
 
 num_features = BATCH_SIZE * tf.image_resize[0] * tf.image_resize[1]  # Set dimension of resized image + batch size for output layer
-model = ThaiOCRNN(num_features, LABEL_NUMBER)
+model = ThaiOCRNN(num_features, LABEL_NUMBER, BATCH_SIZE)
 model.load_state_dict(torch.load(f'{ MODEL_DIR_PATH }thaiocr.pth', weights_only=True))
 model.to(DEVICE)
 model.eval()

@@ -6,6 +6,7 @@ import pandas as pd
 import pprint
 import pickle
 import numpy as np
+import argparse
 
 from modules.ThaiOCRDataset import ThaiOCRDataset
 from modules.ThaiOCRNN import ThaiOCRNN
@@ -13,6 +14,11 @@ from modules.TrainingConfig import TrainingConfig
 from modules.utils import detect_platform
 
 pp = pprint.PrettyPrinter(indent=4)
+
+parser = argparse.ArgumentParser(description='Train the ThaiOCR model.')
+parser.add_argument('--batch_size', type=int, default=None, help='Batch size for training.')
+parser.add_argument('--epochs', type=int, default=None, help='Number of epochs for training.')
+args = parser.parse_args()
 
 # Load the CSV file via pandas
 data = pd.read_csv('./train_test_split.csv')
@@ -36,13 +42,14 @@ tf = TrainingConfig
 tf.device = torch.device(detect_platform(tf.cuda_num))
 DEVICE = tf.device
 DTYPE = tf.dtype
+BATCH_SIZE = args.batch_size if args.batch_size else tf.batch_size
 
-train_loader = torch.utils.data.DataLoader(ThaiOCRDataset(train_data, onehotencoder=ohe), batch_size=tf.batch_size)
-test_loader = torch.utils.data.DataLoader(ThaiOCRDataset(test_data, onehotencoder=ohe), batch_size=tf.batch_size)
-val_loader = torch.utils.data.DataLoader(ThaiOCRDataset(val_data, onehotencoder=ohe), batch_size=tf.batch_size)
+train_loader = torch.utils.data.DataLoader(ThaiOCRDataset(train_data, onehotencoder=ohe), batch_size=BATCH_SIZE)
+test_loader = torch.utils.data.DataLoader(ThaiOCRDataset(test_data, onehotencoder=ohe), batch_size=BATCH_SIZE)
+val_loader = torch.utils.data.DataLoader(ThaiOCRDataset(val_data, onehotencoder=ohe), batch_size=BATCH_SIZE)
 
-num_features = tf.batch_size * tf.image_resize[0] * tf.image_resize[1]
-model = ThaiOCRNN(num_features, LABEL_NUMBER)
+num_features = BATCH_SIZE * tf.image_resize[0] * tf.image_resize[1]
+model = ThaiOCRNN(num_features, LABEL_NUMBER, BATCH_SIZE)
 model.to(DEVICE)
 
 optimizer = optim.SGD(model.parameters(), lr=tf.learning_rate, momentum=tf.momentum)
