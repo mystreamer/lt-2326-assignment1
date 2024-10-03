@@ -10,3 +10,4 @@ class TrainingConfig:
     dtype: torch.dtype = torch.float32
     momentum: float = 0.9
     device: torch.device = torch.device('mps')
+    image_resize: tuple = (32, 32)

@@ -41,11 +41,11 @@ train_loader = torch.utils.data.DataLoader(ThaiOCRDataset(train_data, onehotenco
 test_loader = torch.utils.data.DataLoader(ThaiOCRDataset(test_data, onehotencoder=ohe), batch_size=tf.batch_size)
 val_loader = torch.utils.data.DataLoader(ThaiOCRDataset(val_data, onehotencoder=ohe), batch_size=tf.batch_size)
 
-num_features = tf.batch_size * 32 * 32
+num_features = tf.batch_size * tf.image_resize[0] * tf.image_resize[1]
 model = ThaiOCRNN(num_features, LABEL_NUMBER)
 model.to(DEVICE)
 
-optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
+optimizer = optim.SGD(model.parameters(), lr=tf.learning_rate, momentum=tf.momentum)
 criterion = nn.CrossEntropyLoss()
 
 def train(model, train_loader, optimizer, criterion, n_epoch=10, iter_print=100):

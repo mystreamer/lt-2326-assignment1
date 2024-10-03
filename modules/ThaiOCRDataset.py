@@ -1,19 +1,18 @@
 import torch
 import torchvision
 from PIL import Image
+from .TrainingConfig import TrainingConfig
 
 # Add some transformation logic
 preprocess = torchvision.transforms.Compose([
-    torchvision.transforms.Resize((32, 32)),
-    # transforms.ToTensor(),
-    # transforms.Normalize((0.5,), (0.5,))
+    torchvision.transforms.Resize(TrainingConfig.image_resize),
 ])
-# preprocessed_image = preprocess(image)
 
 class ThaiOCRDataset(torch.utils.data.Dataset):
     def __init__(self, dataframe, onehotencoder):
         self.dataframe = dataframe
         self.onehotencoder = onehotencoder
+        self.img_resize = TrainingConfig.image_resize
 
     def __len__(self):
         return len(self.dataframe)
