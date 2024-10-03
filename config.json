@@ -1,0 +1,16 @@
+{
+    "folders": [
+        {
+            "language": "en",
+            "path": "./ThaiOCR-TrainigSet/English",
+            "char_range": [46, 121],
+            "charmap": "./charmap.txt"
+        },
+        {
+            "language": "th",
+            "path": "./ThaiOCR-TrainigSet/Thai",
+            "char_range": [161, 285],
+            "charmap": "./charmap.txt"
+        }
+    ]
+}
