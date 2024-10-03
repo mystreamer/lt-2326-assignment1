@@ -190,6 +190,7 @@ def subsample(nested_dict):
     if config.debug_mode:
         # subsample the dict
         return {k: {k2: debbi(random.sample, v2, 5) for k2, v2 in v1.items()} for k, v1 in nested_dict.items()}
+    return nested_dict
 filter_resolutions = lambda x : {k: v for k, v in x.items() if k in config.train_set_resolutions}
 # sf1_files_filtered_res = filter_resolutions(sf1_files_dict)
 # pp.pprint(sf1_files_filtered_res)
