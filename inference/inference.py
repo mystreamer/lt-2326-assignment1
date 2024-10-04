@@ -71,5 +71,5 @@ test(model, test_loader)
 
 print(classification_report(
     [charcode_char_map[ohe.inverse_transform(F.one_hot(torch.LongTensor([el]), n_classes))[0][0]] for el in labs], 
-    [charcode_char_map[ohe.inverse_transform(F.one_hot(torch.LongTensor([el]), n_classes))[0][0]] for el in preds])
-    )
+    [charcode_char_map[ohe.inverse_transform(F.one_hot(torch.LongTensor([el]), n_classes))[0][0]] for el in preds],
+    digits=4))
