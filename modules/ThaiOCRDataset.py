@@ -21,7 +21,7 @@ class ThaiOCRDataset(torch.utils.data.Dataset):
         row = self.dataframe.iloc[index]
         return (
             torchvision.transforms.functional.to_tensor(
-                preprocess(Image.open(row["image_path"]).convert("RGB"))
+                preprocess(Image.open(row["image_path"]))
                 ),
                 self.onehotencoder.transform([[row["label"]]]).toarray()[0],
         )
