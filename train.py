@@ -34,10 +34,10 @@ codes = data['char_code'].unique()
 charcode_char_map = {k: data.loc[data['char_code'] == k, 'char'].iloc[0] for k in codes}
 
 ohe = OneHotEncoder().fit(train_data[['label']].values)
-res = ohe.transform([[77]]).toarray()
-ohe.inverse_transform(res)
+# res = ohe.transform([[77]]).toarray()
+# ohe.inverse_transform(res)
 LABEL_NUMBER = ohe.categories_[0].shape[0]
-print(LABEL_NUMBER)
+# print(LABEL_NUMBER)
 
 tf = TrainingConfig
 tf.device = torch.device(detect_platform(tf.cuda_num))
