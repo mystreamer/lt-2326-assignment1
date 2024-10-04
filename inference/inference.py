@@ -44,7 +44,7 @@ inference_df = inference_df[inference_df['type'] == 'test'].rename(columns={"cha
 test_loader = torch.utils.data.DataLoader(ThaiOCRDataset(inference_df, ohe), batch_size=BATCH_SIZE)
 
 num_features = BATCH_SIZE * tf.image_resize[0] * tf.image_resize[1]  # Set dimension of resized image + batch size for output layer
-model = ThaiOCRNN(num_features, LABEL_NUMBER, BATCH_SIZE)
+model = ThaiOCRNN(tf.image_resize, LABEL_NUMBER)
 model.load_state_dict(torch.load(f'{ MODEL_DIR_PATH }thaiocr.pth', weights_only=True))
 model.to(DEVICE)
 model.eval()
