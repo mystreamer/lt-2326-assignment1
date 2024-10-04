@@ -69,7 +69,10 @@ def test(model, test_loader):
 
 test(model, test_loader)
 
-print(classification_report(
+report = classification_report(
     [charcode_char_map[ohe.inverse_transform(F.one_hot(torch.LongTensor([el]), n_classes))[0][0]] for el in labs], 
     [charcode_char_map[ohe.inverse_transform(F.one_hot(torch.LongTensor([el]), n_classes))[0][0]] for el in preds],
-    digits=4))
+    digits=4,
+    output_dict=True)
+df = pd.DataFrame(report).transpose()
+df.to_csv(f'{ MODEL_DIR_PATH }{ args.model_name }_classification_report.csv')
