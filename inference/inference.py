@@ -12,6 +12,9 @@ from sklearn.metrics import classification_report
 import numpy as np
 import sys
 import argparse
+import pprint
+
+pp = pprint.PrettyPrinter(indent=4)
 
 # Append system path
 sys.path.append('../')
@@ -74,5 +77,6 @@ report = classification_report(
     [charcode_char_map[ohe.inverse_transform(F.one_hot(torch.LongTensor([el]), n_classes))[0][0]] for el in preds],
     digits=4,
     output_dict=True)
+pp.pprint(report)
 df = pd.DataFrame(report).transpose()
 df.to_csv(f'{ MODEL_DIR_PATH }{ args.model_name }_classification_report.csv')
