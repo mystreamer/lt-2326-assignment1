@@ -23,6 +23,7 @@ from modules.utils import detect_platform
 
 parser = argparse.ArgumentParser(description='Train the ThaiOCR model.')
 parser.add_argument('--batch_size', type=int, default=None, help='Batch size for training.')
+parser.add_argument('--model_name', type=str, default='thaiocr', help='Name of the model to save.')
 args = parser.parse_args()
 
 CUDA_NUM = TrainingConfig.cuda_num
@@ -33,7 +34,7 @@ DEVICE = tf.device
 DTYPE = tf.dtype
 
 MODEL_DIR_PATH = '../models/'
-with open(f'{ MODEL_DIR_PATH }thaiocr.ohe', "rb") as f:
+with open(f'{ MODEL_DIR_PATH }{ args.model_name }.ohe', "rb") as f:
     data = pickle.load(f)
     ohe = data["encoder"]
     charcode_char_map = data["charmap"]
@@ -45,7 +46,7 @@ test_loader = torch.utils.data.DataLoader(ThaiOCRDataset(inference_df, ohe), bat
 
 num_features = BATCH_SIZE * tf.image_resize[0] * tf.image_resize[1]  # Set dimension of resized image + batch size for output layer
 model = ThaiOCRNN(tf.image_resize, LABEL_NUMBER)
-model.load_state_dict(torch.load(f'{ MODEL_DIR_PATH }thaiocr.pth', weights_only=True))
+model.load_state_dict(torch.load(f'{ MODEL_DIR_PATH }{ args.model_name }.pth', weights_only=True))
 model.to(DEVICE)
 model.eval()
 

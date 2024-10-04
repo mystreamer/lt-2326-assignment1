@@ -18,6 +18,7 @@ pp = pprint.PrettyPrinter(indent=4)
 parser = argparse.ArgumentParser(description='Train the ThaiOCR model.')
 parser.add_argument('--batch_size', type=int, default=None, help='Batch size for training.')
 parser.add_argument('--epochs', type=int, default=None, help='Number of epochs for training.')
+parser.add_argument('--model_name', type=str, default='thaiocr', help='Name of the model to save.')
 args = parser.parse_args()
 
 # Load the CSV file via pandas
@@ -91,7 +92,7 @@ def train(model, train_loader, optimizer, criterion, n_epoch=10, iter_print=100)
         # Early stopping logic
         if prev_loss > validation_loss:
             # Save model
-            torch.save(model.state_dict(), './models/thaiocr.pth')
+            torch.save(model.state_dict(), f'./models/{ args.model_name }.pth')
             prev_loss = validation_loss
         elif validation_loss - prev_loss > 0.01:
             print("Early stopping!")
@@ -123,7 +124,7 @@ train(model, train_loader, optimizer, criterion, n_epoch=tf.epochs)
 test(model, test_loader, criterion)
 
 # Save the one-hot encoder
-with open('./models/thaiocr.ohe', "wb") as f: 
+with open(f'./models/{ args.model_name }.ohe', "wb") as f: 
     pickle.dump({ "encoder": ohe,
                   "charmap": charcode_char_map
                 }, f)
