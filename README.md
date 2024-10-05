@@ -49,6 +49,8 @@ Train the model
 
 ```
 python train.py --batch_size=32 --epochs=10 --model_name="thaiocr"
+# Copy test-set over into inference folder and rename
+cp -rf train_test_split.csv inference/inference_data.csv
 ```
 
 The `--model_name` parameter specifies what the name of the model saved on disk should be, e.g. `thaiocr` will save under `./models/thaiocr.pth` along with its one-hot encoder `./models/thaiocr.ohe`.
