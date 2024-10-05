@@ -63,6 +63,10 @@ cd inference && python inference.py --batch_size=32 --model_name="thaiocr" && cd
 
 An output should appear reporting precision, recall and F1 for each class, as well as macro- / and weighted average precision/recall/f1 scores for every class in the JSON-format. There is also a CSV table stored of the performance in `.inference`
 
+#### Non-cli Parameters
+
+Additional parameters, e.g. filepaths to the train/test directory and learning_rate can be configured in the config.json or directly in the `modules/TrainingConfig.py` classes respectively.
+
 ## Analysis
 
 ### Performance Report

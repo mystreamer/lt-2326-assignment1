@@ -2,13 +2,13 @@
     "folders": [
         {
             "language": "en",
-            "path": "/scratch/lt2326-2926-h24/ThaiOCR/ThaiOCR-TrainigSet/English",
+            "path": "./ThaiOCR-TrainigSet/English",
             "char_range": [46, 121],
             "charmap": "./charmap.txt"
         },
         {
             "language": "th",
-            "path": "/scratch/lt2326-2926-h24/ThaiOCR/ThaiOCR-TrainigSet/Thai",
+            "path": "./ThaiOCR-TrainigSet/Thai",
             "char_range": [161, 285],
             "charmap": "./charmap.txt"
         }
