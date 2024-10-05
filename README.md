@@ -67,7 +67,7 @@ An output should appear reporting precision, recall and F1 for each class, as we
 
 #### Non-cli Parameters
 
-Additional parameters, e.g. filepaths to the train/test directory and learning_rate can be configured in the config.json or directly in the `modules/TrainingConfig.py` classes respectively.
+Additional parameters, e.g. filepaths to the train/test directory and learning_rate can be configured in the config.json or directly in the `modules/TrainingConfig.py` classes respectively. The Cuda number can also be specified in the `TrainingConfig.py`.
 
 ## Analysis
 
