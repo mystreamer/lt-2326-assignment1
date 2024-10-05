@@ -8,7 +8,7 @@ import torch.nn.functional as F
 import pickle
 import pandas as pd
 from torcheval.metrics import MulticlassF1Score, MulticlassPrecision, MulticlassRecall, MulticlassAccuracy, MulticlassConfusionMatrix
-from sklearn.metrics import classification_report
+from sklearn.metrics import classification_report, confusion_matrix
 import numpy as np
 import sys
 import argparse
@@ -80,3 +80,13 @@ report = classification_report(
 pp.pprint(report)
 df = pd.DataFrame(report).transpose()
 df.to_csv(f'{ MODEL_DIR_PATH }{ args.model_name }_classification_report.csv')
+
+matrix = confusion_matrix(
+    [charcode_char_map[ohe.inverse_transform(F.one_hot(torch.LongTensor([el]), n_classes))[0][0]] for el in labs], 
+    [charcode_char_map[ohe.inverse_transform(F.one_hot(torch.LongTensor([el]), n_classes))[0][0]] for el in preds])
+# import pdb; pdb.set_trace()
+sorted_labels = sorted(charcode_char_map.values())
+df = pd.DataFrame(matrix)
+df.columns = sorted_labels
+df.index = sorted_labels
+df.to_csv(f'{ MODEL_DIR_PATH }{ args.model_name }_confusion_matrix.csv')

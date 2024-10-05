@@ -21,25 +21,25 @@ parser.add_argument('-l',
                 )
 parser.add_argument('--train_set_resolutions',
                     type=str,
-                    default='all',
+                    default=["200", "300", "400"],
                     nargs='+',
                     help='Specify which resolution(s) should be included in the generated train set, e.g. "200" or "200,300".'
                 )
 parser.add_argument('--train_set_fontstyles',
                      type=str,
-                    default='all',
+                    default=['italic', 'bold', 'regular', 'bold_italic'],
                     nargs='+',
                     help='Specify which fontstyle(s) should be included in the generated test set, e.g. "italic" or "italic,bold".'
                 )
 parser.add_argument('--test_set_resolutions',
                     type=str,
-                    default='all',
+                    default=["200", "300", "400"],
                     nargs='+',
                     help='Specify which resolution(s) should be included in the generated test set, e.g. "200" or "200,300".'
                 )
 parser.add_argument("--test_set_fontstyles",
                     type=str,
-                    default='all',
+                    default=['italic', 'bold', 'regular', 'bold_italic'],
                     nargs='+',
                     help='Specify which fontstyle(s) should be included in the generated test set, e.g. "italic" or "italic,bold".'
                 )
